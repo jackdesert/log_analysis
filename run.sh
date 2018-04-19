@@ -1,8 +1,8 @@
 #! /bin/bash
 
-raw=raw.log
+raw=production.log
 formatted=formatted.log
-gnuplot_file=http.gnuplot
+gnuplot_file=memory.gnuplot
 output=pretty.png
 
 echo Pulling File from Production
