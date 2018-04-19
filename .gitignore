@@ -1,3 +1,5 @@
+*.swp
+
 production.log
 formatted.log
 pretty.png
