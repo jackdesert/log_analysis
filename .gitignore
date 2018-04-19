@@ -1,6 +1,9 @@
+# Vim Swap files
 *.swp
 
-production.log
-formatted.log
-pretty.png
+# Generated Images
+*.png
+
+# Raw and Intermediate Data Files
+*.log
 

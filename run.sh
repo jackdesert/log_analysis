@@ -2,8 +2,8 @@
 
 raw=production.log
 formatted=formatted.log
-gnuplot_file=memory.gnuplot
-output=pretty.png
+gnuplot_file=plot_memory_usage.gnuplot
+output=memory_usage.png
 
 echo Pulling File from Production
 rsync -av -e "ssh -i ~/.ssh/bip-a.pem" \
