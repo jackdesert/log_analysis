@@ -2,7 +2,7 @@
 #
 # Source: http://blog.mague.com/?p=201
 #set datafile separator ","
-set terminal png size 12000,600
+set terminal png size 6000,400
 set title "Memory Usage of Puma Worker Processes"
 set ylabel "Memory (MB) for each process"
 set xlabel "month/day"
