@@ -6,4 +6,6 @@
 
 # Raw and Intermediate Data Files
 *.log
+*.dataframe
+*.stats
 
