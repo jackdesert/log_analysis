@@ -45,7 +45,7 @@ class LineParser:
         output = { 'timestamp' : snippets.popleft() }
         intermediate = {}
         for snip in snippets:
-            key, value = snip.split(self.COLON)
+            key, value = snip.split(self.COLON, 1)
             if key in self.KEYS_TO_CONVERT_TO_INTEGERS:
                 value = int(value.strip())
             if key in self.KEYS_OF_INTEREST:
