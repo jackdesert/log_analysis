@@ -62,7 +62,7 @@ class LineParser:
 
 
 class Dyno:
-    GREPPED_LOG = 'grepped.log'
+    GREPPED_LOG = '../shared_log_files/grepped_for_performance_report.log'
     HEAD_COUNT  = 5
     TITLE_WIDTH = 124
 

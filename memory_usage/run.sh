@@ -11,10 +11,10 @@ fi
 
 
 
-raw=$environment.log
-formatted=formatted.log
-gnuplot_file=plot_memory_usage.gnuplot
-output=memory_usage.png
+raw=../shared_log_files/$environment.log
+formatted=../shared_log_files/formatted_for_memory_usage_report.log
+gnuplot_file=memory_usage.gnuplot
+output=/tmp/memory_usage.png
 
 
 echo Pulling File from $environment
@@ -22,7 +22,7 @@ rsync -av -e "ssh -i ~/.ssh/bip-a.pem" \
   ubuntu@$subdomain.elitecare.com:/opt/elitecarerails/log/$environment.log $raw
 
 echo Generating formatted file: $formatted
-cat $raw | awk '{ print $1, $8 }' | grep memory > $formatted
+cat $raw | awk '{ print $1, $9 }' | grep memory: > $formatted
 
 echo Calling rpl to remove 'memory'
 rpl ' memory:' ' ' $formatted

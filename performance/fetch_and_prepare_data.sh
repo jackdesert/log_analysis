@@ -11,8 +11,8 @@ fi
 
 
 
-raw=../$environment.log
-grepped=grepped.log
+raw=../shared_log_files/$environment.log
+grepped=../shared_log_files/grepped_for_performance_report.log
 
 
 echo Pulling File from $environment

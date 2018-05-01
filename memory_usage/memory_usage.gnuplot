@@ -22,4 +22,5 @@ set xtics "2018-04-05", 6*3600
 # https://stackoverflow.com/questions/16736861/pointtype-command-for-gnuplot
 # "with points pointtype 5" sets the point style
 
-plot "formatted.log" using 1:2 with points pointtype 5  title 'production'
+plot '../shared_log_files/formatted_for_memory_usage_report.log' using 1:2 with points pointtype 5  title 'environment'
+
