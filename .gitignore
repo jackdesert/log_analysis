@@ -1,11 +1,9 @@
 # Vim Swap files
 *.swp
 
-# Generated Images
-*.png
 
-# Raw and Intermediate Data Files
-*.log
-*.dataframe
-*.stats
+# Log Files
+/shared_log_files/*log
+/shared_log_files/production/*
+/shared_log_files/staging/*
 
