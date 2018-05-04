@@ -25,20 +25,6 @@ class LineParser:
     def __init__(self, line):
         self.line = line
 
-    def memory_growth(self, intermediate):
-        # How much did memory increase since the last request of this same PID
-        pid    = intermediate[self.PID]
-
-        # Last character will be newline
-        memory = intermediate[self.MEMORY]
-
-        memory_before = memory
-
-        if pid in self.MEMORY_BY_PID:
-            memory_before = self.MEMORY_BY_PID[pid]
-
-        self.MEMORY_BY_PID[pid] = memory
-        return(memory - memory_before)
 
     def parse(self):
         snippets = deque(self.line.split(self.SPACE))
@@ -53,20 +39,33 @@ class LineParser:
             if key in self.INTERMEDIATE_KEYS:
                 intermediate[key] = value
 
-        output[self.MEMORY_GROWTH] = self.memory_growth(intermediate)
+        output[self.MEMORY_GROWTH] = self.__memory_growth(intermediate)
 
 
         return(output)
 
+    def __memory_growth(self, intermediate):
+        # How much did memory increase since the last request of this same PID
+        pid = intermediate[self.PID]
+
+        memory        = intermediate[self.MEMORY]
+        memory_before = memory
+
+        if pid in self.MEMORY_BY_PID:
+            memory_before = self.MEMORY_BY_PID[pid]
+
+        self.MEMORY_BY_PID[pid] = memory
+        return(memory - memory_before)
 
 
 
-class Dyno:
+
+class PerformanceReport:
     GREPPED_LOG = '../shared_log_files/grepped_for_performance_report.log'
     HEAD_COUNT  = 5
     TITLE_WIDTH = 124
 
-    NAME_MAP = {'duration':'mean_duration', 'memory_growth': 'mean_memory_growth'}
+    NAME_MAP = {'duration':'mean_duration_ms', 'memory_growth': 'mean_memory_growth_mb'}
 
     def __init__(self):
         pd.set_option('display.expand_frame_repr', False)
@@ -82,12 +81,22 @@ class Dyno:
         report = all_data.groupby('to').agg('mean').rename(columns=self.NAME_MAP)
 
         report['hits'] = all_data.groupby('to').agg('size')
-        report['total_duration'] = report.mean_duration * report.hits
-        report['total_memory_growth'] = report.mean_memory_growth * report.hits
+        report['total_duration_ms'] = report.mean_duration_ms * report.hits
+        report['total_memory_growth_mb'] = report.mean_memory_growth_mb * report.hits
 
         self.report = report
 
-    def print_title(self, by, manual_content=None):
+
+    def print(self):
+        for column in self.report.columns.tolist():
+            self.__print_ranking(column)
+
+        self.__print_title('', manual_content='All Data Sorted by Endpoint')
+        with pd.option_context('display.max_rows', 1000):
+            print(self.report)
+        self.__print_glossary()
+
+    def __print_title(self, by, manual_content=None):
         content = f'Top {self.HEAD_COUNT} Sorted By {by.upper()}'
         if manual_content:
             content = manual_content
@@ -95,7 +104,7 @@ class Dyno:
         line = f'\n\n\n### {content}{dots_after}'
         print(line[:self.TITLE_WIDTH])
 
-    def enhanced_columns(self, column_to_enhance):
+    def __enhanced_columns(self, column_to_enhance):
         columns = self.report.columns.tolist()
         new_columns = []
         for cc in columns:
@@ -105,32 +114,24 @@ class Dyno:
         return(new_columns)
 
 
-    def print_ranking(self, by):
+    def __print_ranking(self, by):
         ordered = self.report.sort_values(by, ascending=False)
-        ordered.columns = self.enhanced_columns(by)
-        self.print_title(by)
+        ordered.columns = self.__enhanced_columns(by)
+        self.__print_title(by)
         print(ordered.head(self.HEAD_COUNT))
 
-    def print_glossary(self):
+    def __print_glossary(self):
         g = ('\n\n## Glossary\n'
                 'hits:                Total number of requests in log file.\n'
-                'mean_duration:       Mean response time for puma process\n'
-                'total_duration:      hits * mean_duration\n'
-                'mean_memory_growth:  Mean delta resident size (MB) between two consecutive requests by the same PID.\n'
+                'mean_duration_ms:       Mean response time for puma process\n'
+                'total_duration_ms:      hits * mean_duration_ms\n'
+                'mean_memory_growth_mb:  Mean delta resident size (MB) between two consecutive requests by the same PID.\n'
                 '                     Note memory is reported as an integer.\n'
                 '                     Also note that because puma is multithreaded, delta resident size is expected to \n'
                 '                     bleed onto other concurrent requests.\n'
-                'total_memory_growth: hits * mean_memory_growth\n')
+                'total_memory_growth_mb: hits * mean_memory_growth_mb\n')
         print(g)
 
-    def print(self):
-        for column in self.report.columns.tolist():
-            self.print_ranking(column)
-
-        self.print_title('', manual_content='All Data Sorted by Endpoint')
-        with pd.option_context('display.max_rows', 1000):
-            print(self.report)
-        self.print_glossary()
 
 
 
@@ -138,6 +139,6 @@ class Dyno:
 #p = LineParser('2018-03-14T10:21:40 method:GET path:/house_dashboard/recent_alerts status:200 duration:4 pid:52 duration:34 to:alerts#index browser:da9940e2 memory:5\n')
 
 
-d = Dyno()
-d.process()
-d.print()
+r = PerformanceReport()
+r.process()
+r.print()
