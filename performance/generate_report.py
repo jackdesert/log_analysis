@@ -128,7 +128,8 @@ class Dyno:
             self.print_ranking(column)
 
         self.print_title('', manual_content='All Data Sorted by Endpoint')
-        print(self.report)
+        with pd.option_context('display.max_rows', 1000):
+            print(self.report)
         self.print_glossary()
 
 
