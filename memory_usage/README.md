@@ -9,7 +9,7 @@ Full Report (Includes rsync from server)
 If called with "staging" as the first argument, data is pulled from staging server.
 Otherwise data is pulled from production.
 
-    ./run.sh [staging]
+    ./run.sh [--staging]
 
 
 

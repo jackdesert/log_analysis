@@ -3,7 +3,7 @@
 subdomain=bip
 environment=production
 
-if [ $1 = 'staging' ]; then
+if [ $1 = '--staging' ]; then
   subdomain=staging
   environment=staging
 fi
