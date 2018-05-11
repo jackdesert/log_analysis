@@ -1,0 +1,174 @@
+from collections import deque
+import numpy as np
+import pdb
+import pandas as pd
+import sys
+import matplotlib
+
+# Specify backend before importing pyplot
+# Using the Agg backend because it is available on systems with no X-server
+matplotlib.use('Agg')
+
+import matplotlib.pyplot as plt
+
+# Typical line that gets parsed
+#   '2018-03-14T10:21:40 method:GET path:/house_dashboard/recent_alerts status:200 duration:4 pid:52 duration:34 to:alerts#index browser:da9940e2 memory:5\n'
+class LineParser:
+    SPACE = ' '
+    COLON = ':'
+    MEMORY_GROWTH = 'memory_growth'
+    PID           = 'pid'
+    MEMORY        = 'memory'
+
+    KEYS_OF_INTEREST            = set(['timestamp', 'duration', 'to', 'browser', 'android'])
+    INTERMEDIATE_KEYS           = set([MEMORY, PID])
+    KEYS_TO_CONVERT_TO_INTEGERS = set([MEMORY, 'duration'])
+
+    MEMORY_BY_PID = {}
+
+
+    def __init__(self, line):
+        self.line = line
+
+
+    def parse(self):
+        snippets = deque(self.line.split(self.SPACE))
+        output = { 'timestamp' : snippets.popleft() }
+        intermediate = {}
+        for snip in snippets:
+            try:
+                key, value = snip.split(self.COLON, 1)
+            except:
+                pdb.set_trace()
+            if key in self.KEYS_TO_CONVERT_TO_INTEGERS:
+                value = int(value.strip())
+            if key in self.KEYS_OF_INTEREST:
+                output[key] = value
+            if key in self.INTERMEDIATE_KEYS:
+                intermediate[key] = value
+
+        output[self.MEMORY_GROWTH] = self.__memory_growth(intermediate)
+
+
+        return(output)
+
+    def __memory_growth(self, intermediate):
+        # How much did memory increase since the last request of this same PID
+        pid = intermediate[self.PID]
+
+        memory        = intermediate[self.MEMORY]
+        memory_before = memory
+
+        if pid in self.MEMORY_BY_PID:
+            memory_before = self.MEMORY_BY_PID[pid]
+
+        self.MEMORY_BY_PID[pid] = memory
+        return(memory - memory_before)
+
+
+
+
+class PerformanceReport:
+    DEFAULT_GREPPED_LOG = '../shared_log_files/grepped_for_performance_report.log'
+
+    NAME_MAP = {'duration':'mean_duration_ms', 'memory_growth': 'mean_memory_growth_mb'}
+
+    TIMESTAMP_FORMAT = '%Y-%m-%dT%H:%M:%S'
+    MINUTES_PER_DAY = 24 * 60
+
+    RES_10 = 10
+    RES_60 = 60
+    ACCEPTABLE_RESOLUTIONS = set([RES_10, RES_60])
+
+    def __init__(self, res, grepped_log, output_dir):
+        pd.set_option('display.expand_frame_repr', False)
+        self.grepped_log = grepped_log
+        self.output_dir  = output_dir
+        self.res = res
+        if res not in self.ACCEPTABLE_RESOLUTIONS: raise
+
+
+    @property
+    def bin_count(self):
+        return (self.MINUTES_PER_DAY // self.res)
+
+    @property
+    def range_max(self):
+        return (self.bin_count - 1)
+
+    def plot(self, data, title):
+        palette = np.zeros(self.bin_count)
+
+        # Some endpoints receive no hits in a period.
+        # Make sure there is one data point in the bar graph regardless
+        for string_index, value in zip(data.index, data.values):
+            palette[int(string_index)] = value
+
+
+        plt.bar(range(self.bin_count), palette, 0.9)
+        plt.title(title, fontweight='bold')
+        plt.xlabel('Hour')
+        plt.ylabel('Hits per hour')
+        # set the locations of the xticks
+        #xticks_loc = [ idx * 6 for idx in range(len(all_endpoints_by_60))]
+        #plt.xticks( xticks_loc )
+
+        # set the locations and labels of the xticks
+        #xticks( arange(5), ('Tom', 'Dick', 'Harry', 'Sally', 'Sue') )
+        plt.xticks([-0.45, 5.55, 11.55, 17.55], ['0:00', '6:00', '12:00', '18:00'])
+        t = title.replace('/', '__').replace('#', '-')
+        png_filename = f'{ t }--max-{ data.max() }.png'
+        abs_filename = f'{self.output_dir}/{png_filename}'
+        print(f'Saving to { abs_filename }')
+        plt.savefig(abs_filename)
+        plt.clf()
+
+
+
+    def process(self):
+        with open(self.grepped_log) as f:
+            dicts = []
+            for line in f:
+                p = LineParser(line)
+                dicts.append(p.parse())
+            data = pd.DataFrame(dicts)
+
+
+
+        if self.res == self.RES_10:
+            to_res_10 = np.vectorize(lambda x: x[11:15])
+            data['timestamp_res_10']   = to_res_10(data.timestamp)
+            hist = data.groupby('timestamp_res_10').agg('size')
+        elif self.res == self.RES_60:
+            to_res_60 = np.vectorize(lambda x: x[11:13])
+            data['timestamp_res_60']   = to_res_60(data.timestamp)
+            hist = data.groupby('timestamp_res_60').agg('size')
+
+
+        self.plot(hist, 'all_endpoints')
+
+        endpoints = data.to.unique()
+        endpoints.sort()
+        for ep in endpoints:
+            if self.res == self.RES_10:
+                raise
+            elif self.res == self.RES_60:
+                hist = data[data['to'] == ep].groupby('timestamp_res_60').agg('size')
+                self.plot(hist, ep)
+
+
+
+
+if __name__ == '__main__':
+    # Accept filename as input, with fallback to default
+    grepped_log = PerformanceReport.DEFAULT_GREPPED_LOG
+    output_dir  = '.'
+
+    if len(sys.argv) > 1:
+        grepped_log = sys.argv[1]
+
+    if len(sys.argv) > 2:
+        output_dir  = sys.argv[2]
+
+    r = PerformanceReport(60, grepped_log, output_dir)
+    r.process()

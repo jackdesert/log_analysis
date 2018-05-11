@@ -1,6 +1,9 @@
 # Vim Swap files
 *.swp
 
+# Exported Images
+*.png
+
 
 # Log Files
 /shared_log_files/*log
