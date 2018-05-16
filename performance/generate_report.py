@@ -56,10 +56,13 @@ class LineParser:
 
 class PerformanceReport:
     GREPPED_LOG = '../shared_log_files/grepped_for_performance_report.log'
-    HEAD_COUNT  = 5
+    HEAD_COUNT  = 10
     TITLE_WIDTH = 124
 
-    NAME_MAP = {'duration':'mean_duration_ms', 'memory_growth': 'mean_memory_growth_mb'}
+    NAME_MAP = {'duration': 'mean_duration_ms',
+                'memory_growth': 'mean_memory_growth_mb',
+                'median_duration': 'median_duration_ms'}
+    SORTED_COLUMNS = 'median_duration_ms 90p_duration_ms total_duration_ms hits mean_memory_growth_mb total_memory_growth_mb'.split()
 
     def __init__(self):
         pd.set_option('display.expand_frame_repr', False)
@@ -72,13 +75,21 @@ class PerformanceReport:
                 dicts.append(p.parse())
             all_data = pd.DataFrame(dicts)
 
-        report = all_data.groupby('to').agg('mean').rename(columns=self.NAME_MAP)
+        grouped = all_data.groupby('to')
 
-        report['hits'] = all_data.groupby('to').agg('size')
+        report = grouped.agg('mean').rename(columns=self.NAME_MAP)
+
+        report['hits'] = grouped.agg('size')
         report['total_duration_ms'] = report.mean_duration_ms * report.hits
         report['total_memory_growth_mb'] = report.mean_memory_growth_mb * report.hits
 
-        self.report = report
+        report['median_duration_ms'] = grouped.quantile()['duration']
+        report['90p_duration_ms'] = grouped.quantile(0.9)['duration']
+
+        # Remove unwanted intermediate columns
+        del report['mean_duration_ms']
+
+        self.report = report.reindex(self.SORTED_COLUMNS, axis=1)
 
 
     def print(self):
@@ -116,13 +127,15 @@ class PerformanceReport:
 
     def __print_glossary(self):
         g = ('\n\n## Glossary\n'
-                'hits:                Total number of requests in log file.\n'
-                'mean_duration_ms:       Mean response time for puma process\n'
-                'total_duration_ms:      hits * mean_duration_ms\n'
+                'hits:                   Total number of requests in log file.\n'
+                'median_duration_ms:     Median response time for puma process, in milliseconds\n'
+                '90p_duration_ms:        90th percentile of response time for puma process, in milliseconds\n'
+                '                        (90 % of requests are faster than this)\n'
+                'total_duration_ms:      total time spent processing requests, in milliseconds (Equivalent to hits * mean_duration_ms)\n'
                 'mean_memory_growth_mb:  Mean delta resident size (MB) between two consecutive requests by the same PID.\n'
-                '                     Note memory is reported as an integer.\n'
-                '                     Also note that because puma is multithreaded, delta resident size is expected to \n'
-                '                     bleed onto other concurrent requests.\n'
+                '                        Note memory is reported as an integer.\n'
+                '                        Also note that because puma is multithreaded, delta resident size is expected to \n'
+                '                        bleed onto other concurrent requests.\n'
                 'total_memory_growth_mb: hits * mean_memory_growth_mb\n')
         print(g)
 
@@ -133,6 +146,8 @@ class PerformanceReport:
 #p = LineParser('2018-03-14T10:21:40 method:GET path:/house_dashboard/recent_alerts status:200 duration:4 pid:52 duration:34 to:alerts#index browser:da9940e2 memory:5\n')
 
 
+
+# TODO verify that input is a FILE, not a DIR
 r = PerformanceReport()
 r.process()
 r.print()
