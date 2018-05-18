@@ -124,6 +124,7 @@ class PerformanceReport:
         getattr(plt, plot_function)(range(self.bin_count), palette, 0.9)
         plt.xlabel('Hour')
         plt.ylabel(ylabel)
+        plt.title(title, fontweight='bold')
 
         # set the locations of the xticks
         #xticks_loc = [ idx * 6 for idx in range(len(all_endpoints_by_60))]
