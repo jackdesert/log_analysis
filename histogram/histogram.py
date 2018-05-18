@@ -74,7 +74,8 @@ class PerformanceReport:
     NAME_MAP = {'duration':'mean_duration_ms', 'memory_growth': 'mean_memory_growth_mb'}
 
     TIMESTAMP_FORMAT = '%Y-%m-%dT%H:%M:%S'
-    MINUTES_PER_DAY = 24 * 60
+    MINUTES_PER_HOUR = 60
+    MINUTES_PER_DAY = 24 * MINUTES_PER_HOUR
 
     RES_10 = 10
     RES_60 = 60
@@ -97,25 +98,47 @@ class PerformanceReport:
         return (self.bin_count - 1)
 
     def plot(self, data, title):
-        palette = np.zeros(self.bin_count)
-
         # Some endpoints receive no hits in a period.
         # Make sure there is one data point in the bar graph regardless
+        palette = np.zeros(self.bin_count)
+
+        # Fill in Values that actually received hits
         for string_index, value in zip(data.index, data.values):
-            palette[int(string_index)] = value
+            if self.res == self.RES_10:
+                hours = int(string_index[0:2])
+                tens_of_minutes = int(string_index[3])
+                minutes = self.MINUTES_PER_HOUR * hours + 10 * tens_of_minutes
+                palette_index = minutes // self.res
+                palette[palette_index] = value
+            elif self.res == self.RES_60:
+                palette[int(string_index)] = value
 
 
-        plt.bar(range(self.bin_count), palette, 0.9)
-        plt.title(title, fontweight='bold')
+        if self.res == self.RES_60:
+            ylabel = 'Hits per hour'
+            plot_function = 'bar'
+        elif self.res == self.RES_10:
+            ylabel = 'Hits per 10 min'
+            plot_function = 'plot'
+
+        getattr(plt, plot_function)(range(self.bin_count), palette, 0.9)
         plt.xlabel('Hour')
-        plt.ylabel('Hits per hour')
+        plt.ylabel(ylabel)
+
         # set the locations of the xticks
         #xticks_loc = [ idx * 6 for idx in range(len(all_endpoints_by_60))]
         #plt.xticks( xticks_loc )
 
         # set the locations and labels of the xticks
         #xticks( arange(5), ('Tom', 'Dick', 'Harry', 'Sally', 'Sue') )
-        plt.xticks([-0.45, 5.55, 11.55, 17.55], ['0:00', '6:00', '12:00', '18:00'])
+        base_ticks = [0, self.bin_count / 4, self.bin_count / 2, self.bin_count * 3/4]
+        offset_ticks = [t - 0.45 for t in base_ticks]
+        plt.xticks(offset_ticks, ['0:00', '6:00', '12:00', '18:00'])
+        #if self.res == self.RES_60:
+        #    plt.xticks([-0.45, 5.55, 11.55, 17.55], ['0:00', '6:00', '12:00', '18:00'])
+        #elif self.res == self.RES_10:
+        #    plt.xticks([-0.45, 5.55, 11.55, 17.55], ['0:00', '6:00', '12:00', '18:00'])
+
         t = title.replace('/', '__').replace('#', '-')
         png_filename = f'{ t }--max-{ data.max() }.png'
         abs_filename = f'{self.output_dir}/{png_filename}'
@@ -151,7 +174,8 @@ class PerformanceReport:
         endpoints.sort()
         for ep in endpoints:
             if self.res == self.RES_10:
-                raise
+                hist = data[data['to'] == ep].groupby('timestamp_res_10').agg('size')
+                self.plot(hist, ep)
             elif self.res == self.RES_60:
                 hist = data[data['to'] == ep].groupby('timestamp_res_60').agg('size')
                 self.plot(hist, ep)
@@ -170,5 +194,5 @@ if __name__ == '__main__':
     if len(sys.argv) > 2:
         output_dir  = sys.argv[2]
 
-    r = PerformanceReport(60, grepped_log, output_dir)
+    r = PerformanceReport(10, grepped_log, output_dir)
     r.process()
