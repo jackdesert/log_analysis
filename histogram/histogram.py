@@ -20,9 +20,9 @@ class LineParser:
     PID           = 'pid'
     MEMORY        = 'memory'
 
-    KEYS_OF_INTEREST            = set(['timestamp', 'duration', 'to', 'browser', 'android'])
-    INTERMEDIATE_KEYS           = set([MEMORY, PID])
-    KEYS_TO_CONVERT_TO_INTEGERS = set([MEMORY, 'duration'])
+    KEYS_OF_INTEREST            = { 'timestamp', 'duration', 'to', 'browser', 'android' }
+    INTERMEDIATE_KEYS           = { MEMORY, PID }
+    KEYS_TO_CONVERT_TO_INTEGERS = { MEMORY, 'duration' }
 
     MEMORY_BY_PID = {}
 
