@@ -1,4 +1,5 @@
-from collections import deque
+from lib import parser
+
 import numpy as np
 import pdb
 import pandas as pd
@@ -10,63 +11,6 @@ import matplotlib
 matplotlib.use('Agg')
 
 import matplotlib.pyplot as plt
-
-# Typical line that gets parsed
-#   '2018-03-14T10:21:40 method:GET path:/house_dashboard/recent_alerts status:200 duration:4 pid:52 duration:34 to:alerts#index browser:da9940e2 memory:5\n'
-class LineParser:
-    SPACE = ' '
-    COLON = ':'
-    MEMORY_GROWTH = 'memory_growth'
-    PID           = 'pid'
-    MEMORY        = 'memory'
-
-    KEYS_OF_INTEREST            = { 'timestamp', 'duration', 'to', 'browser', 'android' }
-    INTERMEDIATE_KEYS           = { MEMORY, PID }
-    KEYS_TO_CONVERT_TO_INTEGERS = { MEMORY, 'duration' }
-
-    MEMORY_BY_PID = {}
-
-
-    def __init__(self, line):
-        self.line = line
-
-
-    def parse(self):
-        snippets = deque(self.line.split(self.SPACE))
-        output = { 'timestamp' : snippets.popleft() }
-        intermediate = {}
-        for snip in snippets:
-            try:
-                key, value = snip.split(self.COLON, 1)
-            except:
-                pdb.set_trace()
-            if key in self.KEYS_TO_CONVERT_TO_INTEGERS:
-                value = int(value.strip())
-            if key in self.KEYS_OF_INTEREST:
-                output[key] = value
-            if key in self.INTERMEDIATE_KEYS:
-                intermediate[key] = value
-
-        output[self.MEMORY_GROWTH] = self.__memory_growth(intermediate)
-
-
-        return(output)
-
-    def __memory_growth(self, intermediate):
-        # How much did memory increase since the last request of this same PID
-        pid = intermediate[self.PID]
-
-        memory        = intermediate[self.MEMORY]
-        memory_before = memory
-
-        if pid in self.MEMORY_BY_PID:
-            memory_before = self.MEMORY_BY_PID[pid]
-
-        self.MEMORY_BY_PID[pid] = memory
-        return(memory - memory_before)
-
-
-
 
 class PerformanceReport:
     DEFAULT_GREPPED_LOG = '../shared_log_files/grepped_for_performance_report.log'
@@ -153,7 +97,7 @@ class PerformanceReport:
         with open(self.grepped_log) as f:
             dicts = []
             for line in f:
-                p = LineParser(line)
+                p = parser.LineParser(line)
                 dicts.append(p.parse())
             data = pd.DataFrame(dicts)
 
