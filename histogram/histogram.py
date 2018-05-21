@@ -12,7 +12,7 @@ matplotlib.use('Agg')
 
 import matplotlib.pyplot as plt
 
-class PerformanceReport:
+class Report:
     DEFAULT_GREPPED_LOG = '../shared_log_files/grepped_for_performance_report.log'
 
     NAME_MAP = {'duration':'mean_duration_ms', 'memory_growth': 'mean_memory_growth_mb'}
@@ -130,8 +130,8 @@ class PerformanceReport:
 
 if __name__ == '__main__':
     # Accept filename as input, with fallback to default
-    grepped_log = PerformanceReport.DEFAULT_GREPPED_LOG
-    output_dir  = '.'
+    grepped_log = Report.DEFAULT_GREPPED_LOG
+    output_dir  = '/tmp'
 
     if len(sys.argv) > 1:
         grepped_log = sys.argv[1]
@@ -139,5 +139,5 @@ if __name__ == '__main__':
     if len(sys.argv) > 2:
         output_dir  = sys.argv[2]
 
-    r = PerformanceReport(10, grepped_log, output_dir)
+    r = Report(10, grepped_log, output_dir)
     r.process()
