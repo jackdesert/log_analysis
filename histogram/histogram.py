@@ -66,9 +66,9 @@ class Report:
             plot_function = 'plot'
 
         getattr(plt, plot_function)(range(self.bin_count), palette, 0.9)
-        plt.xlabel('Hour')
+        plt.xlabel('Time of Day')
         plt.ylabel(ylabel)
-        plt.title(title, fontweight='bold')
+        plt.title(f'Traffic', fontweight='bold')
 
         # set the locations of the xticks
         #xticks_loc = [ idx * 6 for idx in range(len(all_endpoints_by_60))]
@@ -85,7 +85,8 @@ class Report:
         #    plt.xticks([-0.45, 5.55, 11.55, 17.55], ['0:00', '6:00', '12:00', '18:00'])
 
         t = title.replace('/', '__').replace('#', '-')
-        png_filename = f'{ t }--max-{ data.max() }.png'
+        # Mark as __primary to indicate that there is another plot associated
+        png_filename = f'{ t }--max-{ data.max() }__primary.png'
         abs_filename = f'{self.output_dir}/{png_filename}'
         print(f'Saving to { abs_filename }')
         plt.savefig(abs_filename)
