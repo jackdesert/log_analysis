@@ -28,8 +28,9 @@ class LineParser:
         for snip in snippets:
             try:
                 key, value = snip.split(self.COLON, 1)
-            except:
-                pdb.set_trace()
+            except(ValueError) as e:
+                print(f'\nERROR: unable to parse {snippets}\n')
+                raise(e)
             if key in self.KEYS_TO_CONVERT_TO_INTEGERS:
                 value = int(value.strip())
             if key in self.KEYS_OF_INTEREST:
