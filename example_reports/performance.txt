@@ -1,0 +1,224 @@
+
+
+
+### Top 10 Sorted By MEDIAN_DURATION_MS                                                                                  
+                                      MEDIAN_DURATION_MS  90p_duration_ms  total_duration_ms  hits  mean_memory_growth_mb  total_memory_growth_mb
+to                                                                                                                                               
+form_responses#update.json                        2368.5           2518.0            54720.0    24               0.000000                     0.0
+photos#index.html                                 1736.5           3160.3             8802.0     4               5.250000                    21.0
+people#get_stats_for_all_people.json              1339.0           1477.2           114126.0    84               0.059524                     5.0
+photos#create.json                                1279.0           3234.0            67182.0    37               0.081081                     3.0
+staff#index.html                                   689.0            720.2             5325.0    10               0.000000                     0.0
+form_responses#new.html                            664.0            710.4             1328.0     2               0.000000                     0.0
+notes#index.html                                   605.0            605.0              605.0     1               0.000000                     0.0
+form_responses#show.html                           598.0            640.0             5119.0     9               0.000000                     0.0
+form_responses#index.json                          449.5            716.0           369984.0   796              -0.032663                   -26.0
+residents#index.html                               368.5           1427.0             9182.0    12               0.000000                     0.0
+
+
+
+### Top 10 Sorted By 90P_DURATION_MS                                                                                     
+                                      median_duration_ms  90P_DURATION_MS  total_duration_ms  hits  mean_memory_growth_mb  total_memory_growth_mb
+to                                                                                                                                               
+photos#create.json                                1279.0           3234.0            67182.0    37               0.081081                     3.0
+photos#index.html                                 1736.5           3160.3             8802.0     4               5.250000                    21.0
+form_responses#update.json                        2368.5           2518.0            54720.0    24               0.000000                     0.0
+people#get_stats_for_all_people.json              1339.0           1477.2           114126.0    84               0.059524                     5.0
+residents#index.html                               368.5           1427.0             9182.0    12               0.000000                     0.0
+staff#index.html                                   689.0            720.2             5325.0    10               0.000000                     0.0
+form_responses#index.json                          449.5            716.0           369984.0   796              -0.032663                   -26.0
+form_responses#new.html                            664.0            710.4             1328.0     2               0.000000                     0.0
+signatures#index.html                              204.0            708.0            14534.0    43               0.000000                     0.0
+form_responses#show.html                           598.0            640.0             5119.0     9               0.000000                     0.0
+
+
+
+### Top 10 Sorted By TOTAL_DURATION_MS                                                                                   
+                                      median_duration_ms  90p_duration_ms  TOTAL_DURATION_MS   hits  mean_memory_growth_mb  total_memory_growth_mb
+to                                                                                                                                                
+form_responses#index.json                          449.5            716.0           369984.0    796              -0.032663                   -26.0
+house_dashboard#recent_alerts.html                   5.0              5.0           289523.0  57497               0.000400                    23.0
+people#get_stats_for_all_people.json              1339.0           1477.2           114126.0     84               0.059524                     5.0
+people#index.json                                   22.0             94.1            73920.0   1080               0.043519                    47.0
+photos#create.json                                1279.0           3234.0            67182.0     37               0.081081                     3.0
+form_responses#update.json                        2368.5           2518.0            54720.0     24               0.000000                     0.0
+people#get_stats_for_person.json                     9.0             28.0            54398.0   3254               0.000307                     1.0
+traffic#plots.html                                  97.0            181.0            42331.0     11               0.636364                     7.0
+medications#index.json                               3.0              4.0            39988.0   9737               0.000103                     1.0
+sessions#get_sync_status.json                        2.0              2.0            26070.0  10051               0.000199                     2.0
+
+
+
+### Top 10 Sorted By HITS                                                                                                
+                                      median_duration_ms  90p_duration_ms  total_duration_ms   HITS  mean_memory_growth_mb  total_memory_growth_mb
+to                                                                                                                                                
+house_dashboard#recent_alerts.html                   5.0              5.0           289523.0  57497               0.000400                    23.0
+sessions#get_sync_status.json                        2.0              2.0            26070.0  10051               0.000199                     2.0
+medications#index.json                               3.0              4.0            39988.0   9737               0.000103                     1.0
+interactions#index.json                              4.0             11.0            22927.0   3338               0.000000                     0.0
+people#get_stats_for_person.json                     9.0             28.0            54398.0   3254               0.000307                     1.0
+status#index.html                                    2.0              2.0             2911.0   1427               0.000000                     0.0
+people#index.json                                   22.0             94.1            73920.0   1080               0.043519                    47.0
+application#get_client_app_info.html                 1.0              1.0             1202.0   1079               0.000000                     0.0
+alerts#index.json                                    7.0             10.0             8221.0   1039               0.000000                     0.0
+notes#get_photo_ids.json                             5.0              5.0             5230.0   1023               0.000000                     0.0
+
+
+
+### Top 10 Sorted By MEAN_MEMORY_GROWTH_MB                                                                               
+                                      median_duration_ms  90p_duration_ms  total_duration_ms  hits  MEAN_MEMORY_GROWTH_MB  total_memory_growth_mb
+to                                                                                                                                               
+photos#index.html                                 1736.5           3160.3             8802.0     4               5.250000                    21.0
+traffic#plots.html                                  97.0            181.0            42331.0    11               0.636364                     7.0
+bug_reports#show.html                              161.0            180.4             1371.0    13               0.538462                     7.0
+photos#show.html                                    92.0            100.8             1225.0    13               0.230769                     3.0
+photos#create.json                                1279.0           3234.0            67182.0    37               0.081081                     3.0
+people#get_stats_for_all_people.json              1339.0           1477.2           114126.0    84               0.059524                     5.0
+people#index.json                                   22.0             94.1            73920.0  1080               0.043519                    47.0
+scheduled_instances#index.json                       2.0              2.3               84.0    38               0.026316                     1.0
+family_members/feed#index.html                     196.5            258.4             8400.0    40               0.025000                     1.0
+watches#index.json                                  95.0            105.3            13363.0   138               0.021739                     3.0
+
+
+
+### Top 10 Sorted By TOTAL_MEMORY_GROWTH_MB                                                                              
+                                      median_duration_ms  90p_duration_ms  total_duration_ms   hits  mean_memory_growth_mb  TOTAL_MEMORY_GROWTH_MB
+to                                                                                                                                                
+people#index.json                                   22.0             94.1            73920.0   1080               0.043519                    47.0
+house_dashboard#recent_alerts.html                   5.0              5.0           289523.0  57497               0.000400                    23.0
+photos#index.html                                 1736.5           3160.3             8802.0      4               5.250000                    21.0
+traffic#plots.html                                  97.0            181.0            42331.0     11               0.636364                     7.0
+bug_reports#show.html                              161.0            180.4             1371.0     13               0.538462                     7.0
+people#get_stats_for_all_people.json              1339.0           1477.2           114126.0     84               0.059524                     5.0
+watches#index.json                                  95.0            105.3            13363.0    138               0.021739                     3.0
+photos#download_photo.json                           1.0              1.0              541.0    480               0.006250                     3.0
+photos#show.html                                    92.0            100.8             1225.0     13               0.230769                     3.0
+photos#create.json                                1279.0           3234.0            67182.0     37               0.081081                     3.0
+
+
+
+### All Data Sorted by Endpoint                                                                                          
+                                           median_duration_ms  90p_duration_ms  total_duration_ms   hits  mean_memory_growth_mb  total_memory_growth_mb
+to                                                                                                                                                     
+activity_definitions#index.json                           3.0              3.7              136.0     34               0.000000                     0.0
+activity_records#create.json                             14.0             28.4              530.0     23               0.000000                     0.0
+activity_records#index.json                               7.0             12.8             4063.0    353               0.000000                     0.0
+alert_triggers#index.json                                17.0             40.4             2920.0    113               0.000000                     0.0
+alerts#index.json                                         7.0             10.0             8221.0   1039               0.000000                     0.0
+alerts#update.json                                       14.0             21.0              420.0     27               0.000000                     0.0
+api/amazon_iot#alert.json                                14.0             14.8              183.0     13               0.000000                     0.0
+application#get_client_app_info.html                      1.0              1.0             1202.0   1079               0.000000                     0.0
+bug_reports#create.json                                   5.0              5.0               15.0      3               0.000000                     0.0
+bug_reports#set_attachment.html                          86.0            222.8              355.0      3               0.000000                     0.0
+bug_reports#show.html                                   161.0            180.4             1371.0     13               0.538462                     7.0
+clients#show.json                                         3.0              3.0               94.0     32               0.000000                     0.0
+clients#upsert.json                                       5.0              6.0              111.0     21               0.000000                     0.0
+config_entries#edit_general_settings.html                99.0             99.0               99.0      1               0.000000                     0.0
+config_entries#index.json                                 7.0              8.1              287.0     50               0.000000                     0.0
+config_entries#save_general_settings.html                47.0             47.0               47.0      1               0.000000                     0.0
+doctors#index.html                                      155.0            155.0              155.0      1               0.000000                     0.0
+documents#index.json                                      3.0              5.0              174.0     49               0.000000                     0.0
+downloads#android.html                                    1.0              6.6               12.0      4               0.000000                     0.0
+education_items#index.json                                3.0              4.7              119.0     34               0.000000                     0.0
+enumerations#index.json                                   3.0             36.8              677.0     37               0.000000                     0.0
+excursions#active_status.html                            14.0             17.0             1028.0     69               0.014493                     1.0
+family_members/feed#index.html                          196.5            258.4             8400.0     40               0.025000                     1.0
+family_members/messages#create.html                      16.0             16.0               16.0      1               0.000000                     0.0
+family_members/messages#index.html                       54.0             93.7              242.0      4               0.000000                     0.0
+form_data#get_average.json                               12.0             99.2             3708.0     83               0.000000                     0.0
+form_data#get_latest.json                                15.0             17.5              539.0     36               0.000000                     0.0
+form_definitions#index.json                               3.0              6.0              434.0     34               0.000000                     0.0
+form_definitions#latest_revision.json                     5.0              8.0             2799.0    463               0.000000                     0.0
+form_definitions#show.html                               14.0             27.5              458.0     28               0.000000                     0.0
+form_response_locks#create.html                           9.0              9.0                9.0      1               0.000000                     0.0
+form_response_locks#create.json                           9.5              9.9               19.0      2               0.000000                     0.0
+form_response_locks#extend_lock.html                      6.0              6.0                6.0      1               0.000000                     0.0
+form_response_locks#extend_lock.json                      6.0              7.0              825.0    130               0.000000                     0.0
+form_response_locks#release_locks.html                    4.0              4.0               67.0     16               0.000000                     0.0
+form_response_locks#release_locks.json                    4.0              4.0                8.0      2               0.000000                     0.0
+form_responses#create.json                               44.0            370.6             6040.0     29               0.000000                     0.0
+form_responses#index.html                               351.0            375.8             1038.0      3               0.000000                     0.0
+form_responses#index.json                               449.5            716.0           369984.0    796              -0.032663                   -26.0
+form_responses#new.html                                 664.0            710.4             1328.0      2               0.000000                     0.0
+form_responses#show.html                                598.0            640.0             5119.0      9               0.000000                     0.0
+form_responses#show.json                                  6.5              7.0               52.0      8               0.000000                     0.0
+form_responses#update.json                             2368.5           2518.0            54720.0     24               0.000000                     0.0
+form_revisions#index.json                                 4.0              5.0              125.0     31               0.000000                     0.0
+form_revisions#show.json                                  4.5              4.9                9.0      2               0.000000                     0.0
+house_dashboard#index.html                                5.0              6.0              495.0     96               0.000000                     0.0
+house_dashboard#recent_alerts.html                        5.0              5.0           289523.0  57497               0.000400                    23.0
+houses#index.json                                         6.0              7.2              453.0     69               0.000000                     0.0
+icons#index.json                                         18.0             43.7             1827.0     94               0.000000                     0.0
+interactions#index.json                                   4.0             11.0            22927.0   3338               0.000000                     0.0
+landing#index.html                                        6.0             92.0             1455.0     41               0.000000                     0.0
+maintenance_requests#index.html                         104.0            104.0              104.0      1               0.000000                     0.0
+medications#index.json                                    3.0              4.0            39988.0   9737               0.000103                     1.0
+notes#create.html                                        14.0             14.0              111.0      8               0.000000                     0.0
+notes#create.json                                        12.0             14.3              782.0     58               0.000000                     0.0
+notes#get_photo_ids.json                                  5.0              5.0             5230.0   1023               0.000000                     0.0
+notes#get_watch.json                                      3.0              3.0             3159.0   1023               0.000000                     0.0
+notes#index.html                                        605.0            605.0              605.0      1               0.000000                     0.0
+notes#index.json                                        365.0            398.0             9487.0     27               0.000000                     0.0
+notes#new.html                                          177.0            194.4             1600.0      9               0.000000                     0.0
+notes#show.json                                          10.0             12.1              533.0     50               0.000000                     0.0
+pain_assessments#index.json                               3.0              6.4              123.0     27               0.000000                     0.0
+people#edit.html                                        107.0            111.8              314.0      3               0.000000                     0.0
+people#get_location.json                                  7.0              7.4              336.0     47               0.000000                     0.0
+people#get_stats_for_all_people.json                   1339.0           1477.2           114126.0     84               0.059524                     5.0
+people#get_stats_for_person.json                          9.0             28.0            54398.0   3254               0.000307                     1.0
+people#index.json                                        22.0             94.1            73920.0   1080               0.043519                    47.0
+people#show.html                                          5.0              5.0               10.0      2               0.000000                     0.0
+people#show.json                                         28.0             34.0             2068.0     75               0.000000                     0.0
+people#update.json                                      167.0            167.0              167.0      1               0.000000                     0.0
+people/alerts_review#get_status.json                      3.0              3.0              128.0     42               0.000000                     0.0
+people/alerts_review#update_status.json                   6.0              7.0              275.0     42               0.000000                     0.0
+people/notes_review#get_status.json                       3.0              4.0              154.0     45               0.000000                     0.0
+people/notes_review#update_status.json                   16.0             17.0              665.0     42               0.000000                     0.0
+people/passwords#create.html                            173.0            173.0              173.0      1               0.000000                     0.0
+people/passwords#new.html                                18.0             18.0               18.0      1               0.000000                     0.0
+people/person_data#index.html                           113.0            113.0              113.0      1               0.000000                     0.0
+photos#create.json                                     1279.0           3234.0            67182.0     37               0.081081                     3.0
+photos#download_photo.html                                1.0              1.0              921.0    800               0.002500                     2.0
+photos#download_photo.json                                1.0              1.0              541.0    480               0.006250                     3.0
+photos#index.html                                      1736.5           3160.3             8802.0      4               5.250000                    21.0
+photos#show.html                                         92.0            100.8             1225.0     13               0.230769                     3.0
+report_definitions#index.json                             3.0              3.7              108.0     34               0.000000                     0.0
+residents#index.html                                    368.5           1427.0             9182.0     12               0.000000                     0.0
+residents#show.html                                     195.0            205.6             1556.0      8               0.000000                     0.0
+role_definitions#create.html                             11.0             11.0               11.0      1               0.000000                     0.0
+role_definitions#index.html                             112.5            120.9              225.0      2               0.000000                     0.0
+role_definitions#index.json                               4.0             14.0              243.0     51               0.000000                     0.0
+role_definitions#new.html                                95.0             95.0               95.0      1               0.000000                     0.0
+rooms#index.json                                        104.0            113.2             7353.0     69               0.000000                     0.0
+scheduled_instances#index.json                            2.0              2.3               84.0     38               0.026316                     1.0
+security#index.html                                     186.0            186.0              186.0      1               0.000000                     0.0
+sessions#create.html                                     76.0            109.0              517.0      6               0.000000                     0.0
+sessions#create.json                                     74.0             75.0             2979.0     40              -0.025000                    -1.0
+sessions#destroy.html                                     3.0              3.0                9.0      3               0.000000                     0.0
+sessions#get_sync_status.json                             2.0              2.0            26070.0  10051               0.000199                     2.0
+sessions#new.html                                         3.0              4.0               82.0     23               0.000000                     0.0
+signatures#create.html                                    8.0              8.9              331.0     42               0.000000                     0.0
+signatures#index.html                                   204.0            708.0            14534.0     43               0.000000                     0.0
+staff#index.html                                        689.0            720.2             5325.0     10               0.000000                     0.0
+staff#show.html                                         164.0            192.0             1411.0     11               0.000000                     0.0
+status#index.html                                         2.0              2.0             2911.0   1427               0.000000                     0.0
+thank_yous#toggle.json                                   10.0             10.7               39.0      4               0.000000                     0.0
+to_do#index.html                                        126.5            135.6              511.0      4               0.000000                     0.0
+traffic#index.html                                        4.0              4.0               16.0      4               0.000000                     0.0
+traffic#plots.html                                       97.0            181.0            42331.0     11               0.636364                     7.0
+vitals_readings#index.json                                5.0              7.0              141.0     27               0.000000                     0.0
+watches#index.json                                       95.0            105.3            13363.0    138               0.021739                     3.0
+
+
+## Glossary
+hits:                   Total number of requests in log file.
+median_duration_ms:     Median response time for puma process, in milliseconds
+90p_duration_ms:        90th percentile of response time for puma process, in milliseconds
+                        (90 % of requests are faster than this)
+total_duration_ms:      total time spent processing requests, in milliseconds (Equivalent to hits * mean_duration_ms)
+mean_memory_growth_mb:  Mean delta resident size (MB) between two consecutive requests by the same PID.
+                        Note memory is reported as an integer.
+                        Also note that because puma is multithreaded, delta resident size is expected to 
+                        bleed onto other concurrent requests.
+total_memory_growth_mb: hits * mean_memory_growth_mb
+
